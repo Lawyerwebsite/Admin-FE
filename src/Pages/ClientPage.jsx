@@ -2,22 +2,23 @@ import ClientComp from "../Components/Client/ClientComp";
 import { AdminNav } from "../Components/header/Navbar";
 import SideBarComp from "../Components/sideBar/SideBarComp";
 
-
 const ClientPages = () => {
   return (
-    <>
-      <div className="flex h-screen overflow-hidden">
-        <SideBarComp />
+    <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-gray-100">
+      {/* Sidebar */}
+      <SideBarComp />
 
-        <div className="flex flex-col w-full h-screen bg-gray-300">
-          <AdminNav />
+      {/* Main Content */}
+      <div className="flex flex-col flex-grow">
+        {/* Navbar */}
+        <AdminNav />
 
-          <div className="overflow-y-auto bg-gray-300 p-4">
-            <ClientComp />
-          </div>
+        {/* Page Content */}
+        <div className="flex-grow overflow-y-auto bg-gray-300 p-4">
+          <ClientComp />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

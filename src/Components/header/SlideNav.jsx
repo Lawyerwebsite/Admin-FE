@@ -5,6 +5,8 @@ import { AdminNav } from "./AdminNav";
 function SideNav() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
+  
+
   return (
     <>
       <AdminNav onSidebarToggle={() => setSidebarOpen(!isSidebarOpen)} />

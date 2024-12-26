@@ -34,7 +34,7 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="Search pages (e.g., Client, Appointment, Cases)"
-          className="w-full border rounded-lg px-4 py-2 text-lg bg-gray-100 placeholder:text-gray-400 focus:ring focus:ring-indigo-200 focus:outline-none"
+          className="w-full border border-gray-500 rounded-lg px-4 py-2 text-lg bg-gray-100 placeholder:text-gray-400 "
           aria-label="Search"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}

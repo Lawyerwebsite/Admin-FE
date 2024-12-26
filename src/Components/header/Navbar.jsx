@@ -1,8 +1,21 @@
+import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import { FiSearch, FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
+
+const initialState = [
+  {
+    image: null,
+  },
+];
+
+const token = localStorage.getItem("token");
 
 export const AdminNav = ({ onSidebarToggle }) => {
+  const [file, setFile] = useState(null);
+    const [getFormData, setGetFormData] = useState(initialState);
+  
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const profileRef = useRef();
   const navigate = useNavigate();
@@ -16,6 +29,30 @@ export const AdminNav = ({ onSidebarToggle }) => {
     { title: "Profile Settings", path: `/profile/${adminId}` },
     { title: "Logout", action: handleLogout },
   ];
+
+  
+  
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:7000/admin/lawyerprofile/?_id=${adminId}`,
+          {
+            headers: { authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(response);
+
+        setGetFormData(response.data);
+        console.log("get res data====>", response.data.lawyers);
+      } catch (error) {
+        console.error("Error fetching profile data", error);
+      }
+    };
+
+    fetchProfileData();
+  }, [adminId]);
 
 
   useEffect(() => {
@@ -40,7 +77,7 @@ export const AdminNav = ({ onSidebarToggle }) => {
         </button>
 
         <div className="w-full md:w-[60%] px-4 ">
-          <div className="relative">
+          {/* <div className="relative">
             <input
               type="text"
               placeholder="Search clients, cases, or documents"
@@ -48,7 +85,8 @@ export const AdminNav = ({ onSidebarToggle }) => {
               aria-label="Search"
             />
             <FiSearch className="absolute top-1/2 transform -translate-y-1/2 right-4 text-gray-400 " />
-          </div>
+          </div> */}
+          <SearchBar/>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -63,10 +101,10 @@ export const AdminNav = ({ onSidebarToggle }) => {
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-              className="flex items-center space-x-2 px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"
+              className="flex items-center space-x-2 px-3 py-2 bg-gray-100 rounded-xl hover:bg-gray-200"
             >
               <img
-                src="https://via.placeholder.com/150"
+                src={`http://localhost:7000/upload/${getFormData.fileName}`}
                 alt="User"
                 className="w-8 h-8 rounded-full"
               />

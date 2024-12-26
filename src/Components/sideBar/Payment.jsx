@@ -44,7 +44,7 @@ const Payment = ()=>{
              amount ={product.price}
               currency= "INR" 
               token={makePayment} 
-              stripeKey="pk_test_51QZskZGDQULys6h3pJhrzrPqAtKmh4oAN7lfr4Zw46yzOz2yCLtvnxTZ7HNbCSJ5hdFSC03BnvLCpDN8EVuV7qqA00LrMOae2B"
+              stripeKey="rzp_test_AV5koCUvn01wm6"
               >
                 <button>Pay Now {product.price/100}</button>
                 
