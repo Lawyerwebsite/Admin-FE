@@ -3,31 +3,26 @@ import { jsPDF } from "jspdf";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-
-
-
 const getAllAppointments = async (setAppointments) => {
   const authToken = localStorage.getItem("token");
   console.log(authToken);
-  
+
   try {
-    const res = await axios.get("http://localhost:7000/appointment/get",
-      {
-        headers: { Authorization: `Bearer ${authToken}` }
-      }
-    );
+    const res = await axios.get("http://localhost:7000/appointment/get", {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
     toast.success(res.data.Message);
-    const appointments =res.data.allAppointments
-    const allAppointments = appointments.filter((appointment) => appointment.status == "Ongoing" || appointment.status == "Resolved");
+    const appointments = res.data.allAppointments;
+    const allAppointments = appointments.filter(
+      (appointment) =>
+        appointment.status == "Ongoing" || appointment.status == "Resolved"
+    );
     setAppointments(allAppointments);
   } catch (err) {
     console.error(err);
     toast.error(err.response?.data?.Message || "Failed to fetch appointments");
   }
 };
-
-
-
 
 const CaseManagementComp = () => {
   const [cases, setCases] = useState([]);
@@ -66,10 +61,14 @@ const CaseManagementComp = () => {
       filteredCases = filteredCases.filter((c) => c.status === filters.status);
     }
     if (filters.client) {
-      filteredCases = filteredCases.filter((c) => c.client.toLowerCase().includes(filters.client.toLowerCase()));
+      filteredCases = filteredCases.filter((c) =>
+        c.client.toLowerCase().includes(filters.client.toLowerCase())
+      );
     }
     if (filters.startDate) {
-      filteredCases = filteredCases.filter((c) => c.startDate === filters.startDate);
+      filteredCases = filteredCases.filter(
+        (c) => c.startDate === filters.startDate
+      );
     }
 
     setSortedCases(filteredCases);
@@ -77,7 +76,7 @@ const CaseManagementComp = () => {
 
   // Add a new case
   const addNewCase = () => {
-    if (!newCase.title || !newCase.client ) {
+    if (!newCase.title || !newCase.client) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -95,11 +94,11 @@ const CaseManagementComp = () => {
     setCases([...cases, newCaseObject]); // Add the new case to the cases list
     setShowAddCaseForm(false); // Hide the form after saving
     setNewCase({
-      id:"",
+      id: "",
       title: "",
       client: "",
       status: "Ongoing",
-      startDate: new Date().toISOString().split('T')[0],
+      startDate: new Date().toISOString().split("T")[0],
     }); // Reset the form data
   };
 
@@ -116,7 +115,7 @@ const CaseManagementComp = () => {
     doc.text("Start Date", 230, yPosition);
     doc.text("Client", 60, yPosition);
     doc.text("Status", 180, yPosition);
-    
+
     yPosition += 10;
 
     // Adding case data
@@ -143,58 +142,44 @@ const CaseManagementComp = () => {
     setViewCase(caseItem);
   };
 
-
-
-
-
-  const handleSaveEditedCase =async () => {
+  const handleSaveEditedCase = async () => {
     const _id = editCase._id;
     const authToken = localStorage.getItem("token");
     try {
-      await axios.put(
-        `http://localhost:7000/appointment/updatefile/?_id=${_id}`,
-        editCase,
-        {
-          headers: { Authorization: `Bearer ${authToken}` }
-        }
-      )
-      .then((res) => {
-        toast.success(res.data.Message);
-        toast.error(res.data.Error);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.Message)
-      });
+      await axios
+        .put(
+          `http://localhost:7000/appointment/updatefile/?_id=${_id}`,
+          editCase,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        )
+        .then((res) => {
+          toast.success(res.data.Message);
+          toast.error(res.data.Error);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.Message);
+        });
     } catch (err) {
       console.log(err.message);
-      
+
       toast.error(err.response?.data?.Message);
     }
-    setShowAddCaseForm(false); 
-    setEditCase(null); 
+    setShowAddCaseForm(false);
+    setEditCase(null);
   };
-
-
-
-      
-
 
   useEffect(() => {
     getAllAppointments(setCases);
   }, []);
 
-
-
-
-
-
-
   return (
-    <div className="container mx-auto px-4 min-h-screen bg-gray-300">
+    <div className="container mx-auto px-4 min-h-screen bg-white">
       <h2 className="text-2xl font-bold mb-6 text-center lg:text-left">
         Case Management
       </h2>
-  
+
       {/* Filters Section */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
         <select
@@ -232,7 +217,7 @@ const CaseManagementComp = () => {
           + Add New Case
         </button>
       </div>
-  
+
       {/* Add/Edit Case Form */}
       {showAddCaseForm && (
         <div className="mb-6">
@@ -324,11 +309,11 @@ const CaseManagementComp = () => {
           </div>
         </div>
       )}
-  
+
       {/* Case Table */}
       <div className="overflow-x-auto">
         <table className="w-full table-auto">
-          <thead className="bg-blue-600">
+          <thead className="bg-blue-600 text-white">
             <tr>
               <th className="border border-gray-300 text-lg p-4">ID</th>
               <th className="border border-gray-300 text-lg p-4">Client</th>
@@ -394,7 +379,6 @@ const CaseManagementComp = () => {
       </div>
     </div>
   );
-  
 };
 
 export default CaseManagementComp;

@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-// const navigate = useNavigate();
+
 
 const ChangePassword = () => {
   const { id, token } = useParams();
+
+  const navigate = useNavigate();
   
   const [input, setInput] = useState({
     email:"",
@@ -24,7 +26,7 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {email, password, conformPassword} = input;
+    const {email, newPassword, conformPassword} = input;
 
     // if(!email || !password || !conformPassword){
     //   toast.warning(" Please fill all the fields");
@@ -37,12 +39,12 @@ const ChangePassword = () => {
     try {
       await axios.post("http://localhost:7000/admin/resetpassword",{
         email,
-        password,
+        newPassword,
         conformPassword,
       })
       .then((res) => {
-        // navigate("/");
         toast.success(res.data.message)
+        navigate("/");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
