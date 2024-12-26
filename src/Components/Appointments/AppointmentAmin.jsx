@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Button } from "@headlessui/react";
 
 const getAllAppointments = async (setAppointments) => {
   const authToken = localStorage.getItem("token");
@@ -46,6 +47,7 @@ function AppointmentManagement() {
     category: "", // Added category to the state
   });
 
+  
   const handleConfirm = async (id) => {
     const today = new Date();
 
@@ -304,6 +306,10 @@ const todaysDate = today.toISOString().split('T')[0];
                 >
                   Add Appointment
                 </button>
+                
+              </div>
+              <div>
+                
               </div>
             </form>
           </div>
@@ -382,6 +388,7 @@ const todaysDate = today.toISOString().split('T')[0];
                 >
                   Reschedule
                 </button>
+                
               </div>
             </form>
           </div>

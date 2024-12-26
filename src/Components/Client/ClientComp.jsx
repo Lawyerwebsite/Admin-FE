@@ -11,7 +11,7 @@ const getAllAppointments = async (setClients) => {
     const res = await axios.get("http://localhost:7000/appointment/get", {
       headers: { Authorization: `Bearer ${authToken}` },
     });
-    toast.success(res.data.Message);
+    // toast.success(res.data.Message);
     setClients(res.data.allAppointments);
   } catch (err) {
     console.error(err);
@@ -53,16 +53,16 @@ const ClientComp = () => {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="table-auto w-full text-left border-collapse">
+          <table className="table-auto w-full text-left border-collapse ">
             {/* Table Head */}
             <thead>
-              <tr className="bg-blue-500 text-white text-sm md:text-lg xl:text-xl">
-                <th className="px-2 py-2 md:px-4 md:py-3">S.no</th>
-                <th className="px-2 py-2 md:px-4 md:py-3">Name</th>
-                <th className="px-2 py-2 md:px-4 md:py-3">Email</th>
-                <th className="px-2 py-2 md:px-4 md:py-3">Phone</th>
-                <th className="px-2 py-2 md:px-4 md:py-3">Address</th>
-                <th className="px-2 py-2 md:px-4 md:py-3">Actions</th>
+              <tr className="bg-blue-500  text-white text-sm md:text-lg xl:text-xl row-span-3">
+                <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">S.no</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Name</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Email</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Phone</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Address</th>
+                <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Actions</th>
               </tr>
             </thead>
 
@@ -81,24 +81,24 @@ const ClientComp = () => {
                 filteredClients.map((client, index) => (
                   <tr
                     key={client._id}
-                    className="border-t hover:bg-gray-100 transition duration-300"
+                    className="border-t hover:bg-gray-100 transition duration-400"
                   >
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
                       {index + 1}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
                       {client.name}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
                       {client.email}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
                       {client.number}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
                       {client.address}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 flex justify-center">
+                    <td className="px-2 py-2 md:px-4 md:py-3 flex justify-center border ">
                       <Link to={`/viewclient/${client._id}`}>
                         <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-3 py-1 md:px-4 md:py-2 text-sm md:text-base rounded-lg transition duration-300">
                           View

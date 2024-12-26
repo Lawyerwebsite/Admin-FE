@@ -19,7 +19,7 @@ const menuData = [
   { title: "Appointments", icon: <FiCalendar />, route: "/appointments" },
   { title: "Documents", icon: <FiFileText />, route: "/documents" },
   { title: "Billing", icon: <FiDollarSign />, route: "/billing" },
-  { title: "Reports", icon: <FiBarChart2 />, route: "/reports" },
+ 
 ];
 
 const SideBarComp = ({ isSidebarOpen, onToggleSidebar }) => {

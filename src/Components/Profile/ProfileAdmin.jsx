@@ -29,8 +29,6 @@ const AdminProfileCard = () => {
   const [file, setFile] = useState(null);
   const [getFormData, setGetFormData] = useState(initialState);
 
- 
-
   const adminId = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
   console.log(adminId);
@@ -79,7 +77,6 @@ const AdminProfileCard = () => {
         .catch((err) => {
           toast.error(err.response.data.message);
         });
-      
     } catch (error) {
       console.error("Error updating profile", error);
     }
@@ -94,11 +91,15 @@ const AdminProfileCard = () => {
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
     console.log(name, value);
+   
+
 
     setGetFormData((prevData) => ({
       ...prevData,
       [name]: type === "file" ? files[0] : value,
       ...(type === "file" && { fileOriginalName: files[0]?.name || "" }),
+
+     
     }));
   };
 
@@ -116,7 +117,7 @@ const AdminProfileCard = () => {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       return;
     }
-    // alert("Password Updated Successfully!");
+  
     setPasswordData({ newPassword: "", confirmPassword: "" });
     setIsChangingPassword(false);
   };
@@ -127,8 +128,8 @@ const AdminProfileCard = () => {
   const handleProfileImageChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setProfileImage(URL.createObjectURL(selectedFile)); // Generate preview URL
-      setFile(selectedFile); // Store file for upload
+      setProfileImage(URL.createObjectURL(selectedFile)); 
+      setFile(selectedFile); 
     }
   };
 
@@ -165,6 +166,17 @@ const AdminProfileCard = () => {
     }
   };
   console.log(getFormData);
+
+  let formattedDate = "N/A"; // Default value if date is invalid or undefined
+  if (getFormData.dob) {
+    const date = new Date(getFormData.dob);
+    if (!isNaN(date)) {
+      formattedDate = date.toISOString().split("T")[0];
+    } else {
+      console.error("Invalid date value:", getFormData.dob);
+    }
+  }
+
 
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-100 min-h-screen">
@@ -220,7 +232,7 @@ const AdminProfileCard = () => {
                 <input
                   type="date"
                   name="dob"
-                  value={getFormData.dob}
+                  value={formattedDate}
                   onChange={handleInputChange}
                   className="w-full border rounded-md p-2"
                 />
@@ -409,7 +421,7 @@ const AdminProfileCard = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Date of Birth
                 </label>
-                <p className="text-gray-800">{getFormData.dob}</p>
+                <p className="text-gray-800">{formattedDate}</p>
               </div>
 
               <div>

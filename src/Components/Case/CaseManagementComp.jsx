@@ -3,6 +3,9 @@ import { jsPDF } from "jspdf";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+
+
+
 const getAllAppointments = async (setAppointments) => {
   const authToken = localStorage.getItem("token");
   console.log(authToken);
@@ -47,13 +50,13 @@ const CaseManagementComp = () => {
   const [sortedCases, setSortedCases] = useState(cases);
   const [viewCase, setViewCase] = useState(null);
 
-  // Handle filter changes
+ 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
   };
 
-  // Filter cases based on filters
+ 
   useEffect(() => {
     let filteredCases = cases;
 
@@ -61,9 +64,7 @@ const CaseManagementComp = () => {
       filteredCases = filteredCases.filter((c) => c.status === filters.status);
     }
     if (filters.client) {
-      filteredCases = filteredCases.filter((c) =>
-        c.client.toLowerCase().includes(filters.client.toLowerCase())
-      );
+      filteredCases = filteredCases.filter((c) => c.client.toLowerCase().includes(filters.client.toLowerCase()));
     }
     if (filters.startDate) {
       filteredCases = filteredCases.filter(
@@ -74,7 +75,7 @@ const CaseManagementComp = () => {
     setSortedCases(filteredCases);
   }, [filters, cases]);
 
-  // Add a new case
+  
   const addNewCase = () => {
     if (!newCase.title || !newCase.client) {
       alert("Please fill in all required fields.");
@@ -91,20 +92,20 @@ const CaseManagementComp = () => {
       emdDate: newCase.endDateDate,
     };
 
-    setCases([...cases, newCaseObject]); // Add the new case to the cases list
-    setShowAddCaseForm(false); // Hide the form after saving
+    setCases([...cases, newCaseObject]);
+    setShowAddCaseForm(false); 
     setNewCase({
       id: "",
       title: "",
       client: "",
       status: "Ongoing",
-      startDate: new Date().toISOString().split("T")[0],
+      startDate: new Date().toISOString().split('T')[0],
     }); // Reset the form data
   };
-
-  // Function to export cases to PDF
   const exportCasesToPDF = () => {
     const doc = new jsPDF();
+  
+    
     doc.setFontSize(16);
     doc.text("Case Management Report", 14, 10);
     doc.setFontSize(12);
@@ -115,7 +116,7 @@ const CaseManagementComp = () => {
     doc.text("Start Date", 230, yPosition);
     doc.text("Client", 60, yPosition);
     doc.text("Status", 180, yPosition);
-
+    
     yPosition += 10;
 
     // Adding case data
@@ -127,9 +128,9 @@ const CaseManagementComp = () => {
       doc.text(caseItem.endDate, 230, yPosition);
       yPosition += 10;
     });
-
     doc.save("cases_report.pdf");
   };
+  
 
   // Show Edit Case form
   const handleEditCase = (caseItem) => {
@@ -137,10 +138,12 @@ const CaseManagementComp = () => {
     setShowAddCaseForm(true);
   };
 
-  // Show View Case details
-  const handleViewCase = (caseItem) => {
-    setViewCase(caseItem);
-  };
+
+  // const handleViewCase = (caseItem) => {
+    // setViewCase(caseItem);
+   
+
+  // };
 
   const handleSaveEditedCase = async () => {
     const _id = editCase._id;
@@ -364,19 +367,22 @@ const CaseManagementComp = () => {
                     >
                       Edit
                     </button>
-                    <button
+                    {/* <button
                       onClick={() => handleViewCase(caseItem)}
                       className="text-green-500"
                     >
                       View
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+       
+        
       </div>
+      
     </div>
   );
 };

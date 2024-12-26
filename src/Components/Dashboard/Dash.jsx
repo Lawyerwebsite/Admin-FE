@@ -2,6 +2,7 @@ import React from "react";
 import Greeting from "./Greeting";
 
 function DashCards() {
+  
   const cards = [
     {
       title: "Today's Appointments",
