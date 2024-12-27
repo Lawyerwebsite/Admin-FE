@@ -21,8 +21,6 @@ const initialState = [
   },
 ];
 
-// const navigate = useNavigate();
-
 const AdminProfileCard = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
@@ -31,7 +29,6 @@ const AdminProfileCard = () => {
 
   const adminId = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
-  console.log(adminId);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -42,10 +39,7 @@ const AdminProfileCard = () => {
             headers: { authorization: `Bearer ${token}` },
           }
         );
-        console.log(response);
-
         setGetFormData(response.data);
-        console.log("get res data====>", response.data.lawyers);
       } catch (error) {
         console.error("Error fetching profile data", error);
       }
@@ -53,6 +47,14 @@ const AdminProfileCard = () => {
 
     fetchProfileData();
   }, [adminId]);
+
+  const handleInputChange = (e) => {
+    const { name, value, type, files } = e.target;
+    setGetFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "file" ? files[0] : value,
+    }));
+  };
 
   const handleSaveProfile = async (e) => {
     e.preventDefault();
@@ -72,7 +74,6 @@ const AdminProfileCard = () => {
         .then((res) => {
           setIsEditing(false);
           toast.success(res.data.message);
-          // navigate(`/profile/${adminId}`);
         })
         .catch((err) => {
           toast.error(err.response.data.message);
@@ -82,92 +83,11 @@ const AdminProfileCard = () => {
     }
   };
 
-  const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
-    console.log(name, value);
-   
-
-
-    setGetFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "file" ? files[0] : value,
-      ...(type === "file" && { fileOriginalName: files[0]?.name || "" }),
-
-     
-    }));
-  };
-
-  const handlePasswordChangeInput = (e) => {
-    const { name, value } = e.target;
-    try {
-    } catch (error) {}
-  };
-
   const handleEditProfile = () => {
     setIsEditing(true);
   };
 
-  const handlePasswordChange = () => {
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      return;
-    }
-  
-    setPasswordData({ newPassword: "", confirmPassword: "" });
-    setIsChangingPassword(false);
-  };
-  // const handleProfileImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) setProfileImage(URL.createObjectURL(file));
-  // };
-  const handleProfileImageChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setProfileImage(URL.createObjectURL(selectedFile)); 
-      setFile(selectedFile); 
-    }
-  };
-
-  const handleUpload = async () => {
-    if (!file) {
-      alert("Please select an image to upload.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      await axios
-        .put(
-          `http://localhost:7000/admin/upload-image/${formData._id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data.message);
-        })
-        .catch((err) => {
-          console.log(err.response.data.message);
-        });
-      alert("Profile image uploaded successfully.");
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      alert("Failed to upload image.");
-    }
-  };
-  console.log(getFormData);
-
-  let formattedDate = "N/A"; // Default value if date is invalid or undefined
+  let formattedDate = "N/A"; 
   if (getFormData.dob) {
     const date = new Date(getFormData.dob);
     if (!isNaN(date)) {
@@ -177,76 +97,66 @@ const AdminProfileCard = () => {
     }
   }
 
-
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gray-100 min-h-screen">
-      <div className="max-w-7xl mx-auto p-6 bg-gray-100 min-h-screen">
+    <div className="max-w-7xl mx-auto p-6 bg-gray-50 min-h-screen">
+      <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col min-h-full">
         {isEditing ? (
-          // Edit Page
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div className="flex-grow">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-6">Edit Profile</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Name
-                </label>
+                <label className="block text-sm font-semibold text-black">Name</label>
                 <input
                   type="text"
                   name="name"
                   value={getFormData.name}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
+                <label className="block text-sm font-semibold text-black">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={getFormData.email}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Phone
-                </label>
+                <label className="block text-sm font-semibold text-black">Phone</label>
                 <input
                   type="tel"
                   name="number"
                   value={getFormData.number}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Date of Birth
-                </label>
+                <label className="block text-sm font-semibold text-black">Date of Birth</label>
                 <input
                   type="date"
                   name="dob"
                   value={formattedDate}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Gender
-                </label>
+                <label className="block text-sm font-semibold text-black">Gender</label>
                 <select
                   name="gender"
                   value={getFormData.gender}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -255,226 +165,182 @@ const AdminProfileCard = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Address
-                </label>
+                <label className="block text-sm font-semibold text-black">Address</label>
                 <input
                   type="text"
                   name="address"
                   value={getFormData.address}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  City
-                </label>
+                <label className="block text-sm font-semibold text-black">City</label>
                 <input
                   type="text"
                   name="city"
                   value={getFormData.city}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  State
-                </label>
+                <label className="block text-sm font-semibold text-black">State</label>
                 <input
                   type="text"
                   name="state"
                   value={getFormData.state}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Pin Code
-                </label>
+                <label className="block text-sm font-semibold text-black">Pin Code</label>
                 <input
                   type="text"
                   name="pincode"
                   value={getFormData.pincode}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Qualification
-                </label>
+                <label className="block text-sm font-semibold text-black">Qualification</label>
                 <input
                   type="text"
                   name="qualification"
                   value={getFormData.qualification}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Experience
-                </label>
+                <label className="block text-sm font-semibold text-black">Experience</label>
                 <input
                   type="text"
                   name="experience"
                   value={getFormData.experience}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Photo
-                </label>
+                <label className="block text-sm font-semibold text-black">Photo</label>
                 <input
                   type="file"
                   name="image"
                   accept="image/*"
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div className="col-span-1 md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Bio
-                </label>
+                <label className="block text-sm font-semibold text-black">Bio</label>
                 <textarea
                   name="bio"
                   value={getFormData.bio}
                   onChange={handleInputChange}
-                  className="w-full border rounded-md p-2"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
-            <button
-              onClick={handleSaveProfile}
-              className="mt-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-            >
-              Save Profile
-            </button>
           </div>
         ) : (
-          // Profile View Page
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Profile Information</h3>
-            <div className="flex gap-10 my-8 justify-around">
+          
+          <div className="flex-grow">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-6">Profile Information</h3>
+            <div className="flex flex-col gap-12 my-8 justify-between items-center">
               <img
                 src={`http://localhost:7000/upload/${getFormData.fileName}`}
                 alt="profile image"
-                className="rounded-full border-4 border-slate-500 h-[150px] w-[150px]"
+                className="rounded-full border-4 border-blue-500 h-44 w-44 object-cover"
               />
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Name
-                  </label>
-                  <p className="text-gray-800">{getFormData.name}</p>
+                  <label className="text-lg font-semibold text-black">Name</label>
+                  <p className="text-lg text-gray-800">{getFormData.name}</p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Category
-                  </label>
-                  <p className="text-gray-800">{getFormData.category}</p>
-                </div>
-                <div className="col-span-1 md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Bio
-                  </label>
-                  <p className="text-gray-800">{getFormData.bio}</p>
-                </div>
-              </div>
 
-              <div>
-                <button
-                  onClick={handleEditProfile}
-                  className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  Edit Profile
-                </button>
+                <div>
+                  <label className="text-lg font-semibold text-black">Category</label>
+                  <p className="text-lg text-gray-800">{getFormData.category}</p>
+                </div>
+
+                <div>
+                  <label className="text-lg font-semibold text-black">Bio</label>
+                  <p className="text-lg text-gray-800">{getFormData.bio}</p>
+                </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <p className="text-gray-800">{getFormData.email}</p>
+                <label className="text-lg font-semibold text-black">Email</label>
+                <p className="text-lg text-gray-800">{getFormData.email}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Phone
-                </label>
-                <p className="text-gray-800">{getFormData.number}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Date of Birth
-                </label>
-                <p className="text-gray-800">{formattedDate}</p>
+                <label className="text-lg font-semibold text-black">Phone</label>
+                <p className="text-lg text-gray-800">{getFormData.number}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Gender
-                </label>
-                <p className="text-gray-800">{getFormData.gender}</p>
+                <label className="text-lg font-semibold text-black">Date of Birth</label>
+                <p className="text-lg text-gray-800">{formattedDate}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Address
-                </label>
-                <p className="text-gray-800">{getFormData.address}</p>
+                <label className="text-lg font-semibold text-black">Gender</label>
+                <p className="text-lg text-gray-800">{getFormData.gender}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  City
-                </label>
-                <p className="text-gray-800">{getFormData.city}</p>
+                <label className="text-lg font-semibold text-black">Address</label>
+                <p className="text-lg text-gray-800">{getFormData.address}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  State
-                </label>
-                <p className="text-gray-800">{getFormData.state}</p>
+                <label className="text-lg font-semibold text-black">City</label>
+                <p className="text-lg text-gray-800">{getFormData.city}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Pin Code
-                </label>
-                <p className="text-gray-800">{getFormData.pincode}</p>
+                <label className="text-lg font-semibold text-black">State</label>
+                <p className="text-lg text-gray-800">{getFormData.state}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Qualification
-                </label>
-                <p className="text-gray-800">{getFormData.qualification}</p>
+                <label className="text-lg font-semibold text-black">Pin Code</label>
+                <p className="text-lg text-gray-800">{getFormData.pincode}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Experience
-                </label>
-                <p className="text-gray-800">{getFormData.experience}</p>
+                <label className="text-lg font-semibold text-black">Qualification</label>
+                <p className="text-lg text-gray-800">{getFormData.qualification}</p>
+              </div>
+
+              <div>
+                <label className="text-lg font-semibold text-black">Experience</label>
+                <p className="text-lg text-gray-800">{getFormData.experience}</p>
               </div>
             </div>
           </div>
         )}
+
+       
+        <button
+          onClick={handleEditProfile}
+          className="mt-6 py-3 px-8 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition duration-300"
+        >
+          Edit Profile
+        </button>
       </div>
     </div>
   );

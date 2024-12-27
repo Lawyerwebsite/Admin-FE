@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "@headlessui/react";
+import { FaPlus } from "react-icons/fa";
 
 const getAllAppointments = async (setAppointments) => {
   const authToken = localStorage.getItem("token");
   console.log(authToken);
-  
+
   try {
     const res = await axios.get("http://localhost:7000/appointment/get",
       {
@@ -47,14 +48,14 @@ function AppointmentManagement() {
     category: "", // Added category to the state
   });
 
-  
+
   const handleConfirm = async (id) => {
     const today = new Date();
 
-const todaysDate = today.toISOString().split('T')[0];
+    const todaysDate = today.toISOString().split('T')[0];
 
     try {
-      const status = { status: "Ongoing", startDate : todaysDate };
+      const status = { status: "Ongoing", startDate: todaysDate };
       await axios.put(
         `http://localhost:7000/appointment/updatestatus/?_id=${id}`,
         status,
@@ -107,72 +108,86 @@ const todaysDate = today.toISOString().split('T')[0];
 
   return (
     <div className="container mx-auto p-6 min-h-screen font-sans">
-      <h1 className="text-4xl font-bold text-center mb-8 text-teal-600">
+      <h1 className="text-4xl font-bold  mb-8 text-black">
         Appointment Management
       </h1>
       <button
         onClick={() => setShowAddModal(true)}
-        className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded mb-6 transition-all"
+        className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-xl px-6 py-3 rounded mb-6 transition-all shadow-lg"
       >
-        Add Appointment
+        <FaPlus className="text-2xl" /> Add Appointment
       </button>
 
       <div className="grid grid-cols-1 border-gray-400 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {appointments.map((appointment) => {
-    const timestamp = appointment.date;
-    const date = new Date(timestamp);
-    const formattedDate = date.toISOString().split('T')[0];
+        {appointments.map((appointment) => {
+          const timestamp = appointment.date;
+          const date = new Date(timestamp);
+          const formattedDate = date.toISOString().split('T')[0];
 
-    return (
-      <div
-        key={appointment._id}
-        className="p-4 rounded-lg shadow-lg shadow-gray-300 border-4 bg-white hover:shadow-lg transition-shadow"
-      >
-        <div>
-          <h2 className="text-xl font-bold">{appointment.name}</h2>
-          <p className="text-lg text-gray-600">Email: {appointment.email}</p>
-          <p className="text-lg text-gray-600">Number: {appointment.number}</p>
-        </div>
-        <div className="text-lg text-gray-600 mb-2">
-          <p className="text-lg text-gray-600">Date: {formattedDate}</p>
-          <p className="text-lg text-gray-600">Time: {appointment.time}</p>
-          <p className="text-lg text-gray-600">Category: {appointment.category}</p>
-          <p className="text-lg text-gray-600">Address: {appointment.address}</p>
-        </div>
-        <p
-          className={`text-lg font-bold ${
-            appointment.status === "confirmed"
-              ? "text-green-600"
-              : "text-yellow-600"
-          }`}
-        >
-          Status: {appointment.status}
-        </p>
-        <div className="mt-4 flex gap-2">
-          {appointment.status === "pending" && (
-            <button
-              onClick={() => handleConfirm(appointment._id)}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          return (
+            <div
+              key={appointment._id}
+              className="p-6 rounded-lg shadow-md bg-white border border-gray-200 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out"
             >
-              Confirm
-            </button>
-          )}
-          <button
-            onClick={() =>
-              setRescheduleData({
-                _id: appointment._id,
-                current: appointment,
-              })
-            }
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Reschedule
-          </button>
-        </div>
+              <div>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-2 ">{appointment.name}</h2>
+                <p className="text-gray-600 text-sm mb-1">
+                  <span className="font-semibold">Email:</span> {appointment.email}
+                </p>
+                <p className="text-gray-600 text-sm mb-1">
+                  <span className="font-semibold">Number:</span> {appointment.number}
+                </p>
+              </div>
+              <div className="text-sm text-gray-600 mt-4">
+                <p>
+                  <span className="font-semibold">Date:</span> {formattedDate}
+                </p>
+                <p>
+                  <span className="font-semibold">Time:</span> {appointment.time}
+                </p>
+                <p>
+                  <span className="font-semibold">Category:</span> {appointment.category}
+                </p>
+                <p>
+                  <span className="font-semibold">Address:</span> {appointment.address}
+                </p>
+              </div>
+              <div className="mt-4">
+                <span
+                  className={`inline-block text-xs font-bold px-3 py-1 rounded-full ${appointment.status === "confirmed"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-yellow-100 text-yellow-600"
+                    }`}
+                >
+                  Status: {appointment.status}
+                </span>
+              </div>
+              <div className="mt-6 flex gap-3">
+                {appointment.status === "pending" && (
+                  <button
+                    onClick={() => handleConfirm(appointment._id)}
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
+                  >
+                    Confirm
+                  </button>
+                )}
+                <button
+                  onClick={() =>
+                    setRescheduleData({
+                      _id: appointment._id,
+                      current: appointment,
+                    })
+                  }
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
+                >
+                  Reschedule
+                </button>
+              </div>
+            </div>
+          );
+
+        })}
       </div>
-    );
-  })}
-</div>
 
 
       {showAddModal && (
@@ -306,10 +321,10 @@ const todaysDate = today.toISOString().split('T')[0];
                 >
                   Add Appointment
                 </button>
-                
+
               </div>
               <div>
-                
+
               </div>
             </form>
           </div>
@@ -388,7 +403,7 @@ const todaysDate = today.toISOString().split('T')[0];
                 >
                   Reschedule
                 </button>
-                
+
               </div>
             </form>
           </div>

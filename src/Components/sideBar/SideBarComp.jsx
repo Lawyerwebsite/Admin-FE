@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   FiHome,
   FiBriefcase,
@@ -10,7 +10,7 @@ import {
   FiBarChart2,
 } from "react-icons/fi";
 
-import Logo from "../assets/logo.jpg"
+import Logo from "../assets/logo.jpg";
 
 const menuData = [
   { title: "Dashboard", icon: <FiHome />, route: "/home" },
@@ -19,7 +19,6 @@ const menuData = [
   { title: "Appointments", icon: <FiCalendar />, route: "/appointments" },
   { title: "Documents", icon: <FiFileText />, route: "/documents" },
   { title: "Billing", icon: <FiDollarSign />, route: "/billing" },
- 
 ];
 
 const SideBarComp = ({ isSidebarOpen, onToggleSidebar }) => {
@@ -33,21 +32,26 @@ const SideBarComp = ({ isSidebarOpen, onToggleSidebar }) => {
         md:translate-x-0 md:static md:w-64`}
       >
         <nav className="h-full flex flex-col mt-5">
-          <div className=" bg-white flex items-center justify-center">
+          <div className="bg-white flex items-center justify-center">
             <img src={Logo} alt="Law Link Logo" className="h-20 w-28" />
-            {/* <span className="text-2xl font-bold text-white ml-3">Law Link</span> */}
           </div>
 
           <ul className="p-4 space-y-2">
             {menuData.map((menu, index) => (
               <li key={index}>
-                <Link
+                <NavLink
                   to={menu.route}
-                  className="flex items-center px-4 py-3 rounded-lg hover:bg-gray-300 transition"
+                  className={({ isActive }) =>
+                    `flex items-center px-4 py-3 rounded-lg transition ${
+                      isActive
+                        ? "bg-blue-500 text-white font-bold shadow-md"
+                        : "hover:bg-blue-100 hover:text-blue-500 text-gray-700"
+                    }`
+                  }
                 >
                   <span className="text-xl">{menu.icon}</span>
                   <span className="ml-4 text-xl font-bold">{menu.title}</span>
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
