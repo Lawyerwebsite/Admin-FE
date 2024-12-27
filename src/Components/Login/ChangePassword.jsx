@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 const ChangePassword = () => {
   const { id, token } = useParams();
-  const navigate = useNavigate();
   
   const [input, setInput] = useState({
     email:"",
@@ -42,7 +41,7 @@ const ChangePassword = () => {
         conformPassword,
       })
       .then((res) => {
-        
+        // navigate("/");
         toast.success(res.data.message)
         navigate("/");
       })

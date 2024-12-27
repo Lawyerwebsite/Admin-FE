@@ -6,31 +6,26 @@ import axios from "axios";
 
 
 
-
-
-
 const getAllAppointments = async (setAppointments) => {
   const authToken = localStorage.getItem("token");
   console.log(authToken);
-  
+
   try {
-    const res = await axios.get("http://localhost:7000/appointment/get",
-      {
-        headers: { Authorization: `Bearer ${authToken}` }
-      }
-    );
+    const res = await axios.get("http://localhost:7000/appointment/get", {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
     toast.success(res.data.Message);
-    const appointments =res.data.allAppointments
-    const allAppointments = appointments.filter((appointment) => appointment.status == "Ongoing" || appointment.status == "Resolved");
+    const appointments = res.data.allAppointments;
+    const allAppointments = appointments.filter(
+      (appointment) =>
+        appointment.status == "Ongoing" || appointment.status == "Resolved"
+    );
     setAppointments(allAppointments);
   } catch (err) {
     console.error(err);
     toast.error(err.response?.data?.Message || "Failed to fetch appointments");
   }
 };
-
-
-
 
 const CaseManagementComp = () => {
   const [cases, setCases] = useState([]);
@@ -69,12 +64,12 @@ const CaseManagementComp = () => {
       filteredCases = filteredCases.filter((c) => c.status === filters.status);
     }
     if (filters.client) {
-      filteredCases = filteredCases.filter((c) =>
-        c.name.toLowerCase().trim().includes(filters.client.toLowerCase().trim())
-      );
+      filteredCases = filteredCases.filter((c) => c.client.toLowerCase().includes(filters.client.toLowerCase()));
     }
     if (filters.startDate) {
-      filteredCases = filteredCases.filter((c) => c.startDate === filters.startDate);
+      filteredCases = filteredCases.filter(
+        (c) => c.startDate === filters.startDate
+      );
     }
 
     setSortedCases(filteredCases);
@@ -82,7 +77,7 @@ const CaseManagementComp = () => {
 
   
   const addNewCase = () => {
-    if (!newCase.title || !newCase.client ) {
+    if (!newCase.title || !newCase.client) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -100,12 +95,12 @@ const CaseManagementComp = () => {
     setCases([...cases, newCaseObject]);
     setShowAddCaseForm(false); 
     setNewCase({
-      id:"",
+      id: "",
       title: "",
       client: "",
       status: "Ongoing",
       startDate: new Date().toISOString().split('T')[0],
-    }); 
+    }); // Reset the form data
   };
   const exportCasesToPDF = () => {
     const doc = new jsPDF();
@@ -113,32 +108,25 @@ const CaseManagementComp = () => {
     
     doc.setFontSize(16);
     doc.text("Case Management Report", 14, 10);
-  
-   
-    doc.setFontSize(10);
-    let yPosition = 20; 
-    const lineHeight = 8; 
-  
-    doc.text("ID", 10, yPosition);
-    doc.text("Case Title", 30, yPosition);
-    doc.text("Client", 65, yPosition);
-    doc.text("Email", 130, yPosition);
-    doc.text("Status", 190, yPosition);
-    doc.text("Start Date", 210, yPosition);
-    yPosition += lineHeight; 
-    sortedCases.forEach((caseItem, index) => {
-      if (yPosition > 280) {
-     
-        doc.addPage();
-        yPosition = 10; 
-      }
-      doc.text(String(index + 1), 10, yPosition);
-      doc.text(caseItem.title || "N/A", 30, yPosition);
-      doc.text(caseItem.name || "N/A", 65, yPosition);
-      doc.text(caseItem.email || "N/A", 130, yPosition);
-      doc.text(caseItem.status || "N/A", 190, yPosition);
-      doc.text(caseItem.startDate || "N/A", 210, yPosition);
-      yPosition += lineHeight; 
+    doc.setFontSize(12);
+    let yPosition = 20;
+
+    // Adding Table Header
+    doc.text("Case Title", 14, yPosition);
+    doc.text("Start Date", 230, yPosition);
+    doc.text("Client", 60, yPosition);
+    doc.text("Status", 180, yPosition);
+    
+    yPosition += 10;
+
+    // Adding case data
+    sortedCases.forEach((caseItem) => {
+      doc.text(caseItem.title, 14, yPosition);
+      doc.text(caseItem.client, 60, yPosition);
+      doc.text(caseItem.status, 180, yPosition);
+      doc.text(caseItem.startDate, 230, yPosition);
+      doc.text(caseItem.endDate, 230, yPosition);
+      yPosition += 10;
     });
     doc.save("cases_report.pdf");
   };
@@ -157,58 +145,44 @@ const CaseManagementComp = () => {
 
   // };
 
-
-
-
-
-  const handleSaveEditedCase =async () => {
+  const handleSaveEditedCase = async () => {
     const _id = editCase._id;
     const authToken = localStorage.getItem("token");
     try {
-      await axios.put(
-        `http://localhost:7000/appointment/updatefile/?_id=${_id}`,
-        editCase,
-        {
-          headers: { Authorization: `Bearer ${authToken}` }
-        }
-      )
-      .then((res) => {
-        toast.success(res.data.Message);
-        toast.error(res.data.Error);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.Message)
-      });
+      await axios
+        .put(
+          `http://localhost:7000/appointment/updatefile/?_id=${_id}`,
+          editCase,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        )
+        .then((res) => {
+          toast.success(res.data.Message);
+          toast.error(res.data.Error);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.Message);
+        });
     } catch (err) {
       console.log(err.message);
-      
+
       toast.error(err.response?.data?.Message);
     }
-    setShowAddCaseForm(false); 
-    setEditCase(null); 
+    setShowAddCaseForm(false);
+    setEditCase(null);
   };
-
-
-
-      
-
 
   useEffect(() => {
     getAllAppointments(setCases);
   }, []);
 
-
-
-
-
-
-
   return (
-    <div className="container mx-auto px-4 min-h-screen bg-gray-300">
+    <div className="container mx-auto px-4 min-h-screen bg-white">
       <h2 className="text-2xl font-bold mb-6 text-center lg:text-left">
         Case Management
       </h2>
-  
+
       {/* Filters Section */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
         <select
@@ -246,7 +220,7 @@ const CaseManagementComp = () => {
           + Add New Case
         </button>
       </div>
-  
+
       {/* Add/Edit Case Form */}
       {showAddCaseForm && (
         <div className="mb-6">
@@ -338,11 +312,11 @@ const CaseManagementComp = () => {
           </div>
         </div>
       )}
-  
+
       {/* Case Table */}
       <div className="overflow-x-auto">
         <table className="w-full table-auto">
-          <thead className="bg-blue-600">
+          <thead className="bg-blue-600 text-white">
             <tr>
               <th className="border border-gray-300 text-lg p-4">ID</th>
               <th className="border border-gray-300 text-lg p-4">Client</th>
@@ -411,7 +385,6 @@ const CaseManagementComp = () => {
       
     </div>
   );
-  
 };
 
 export default CaseManagementComp;
