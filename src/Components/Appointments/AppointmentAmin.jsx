@@ -26,6 +26,8 @@ const getAllAppointments = async (setAppointments) => {
 function AppointmentManagement() {
   const authToken = localStorage.getItem("token");
   const [appointments, setAppointments] = useState([]);
+  console.log(appointments);
+  
   const [availableTimes] = useState([
     "08:00 AM",
     "10:00 AM",

@@ -23,7 +23,7 @@ import ChangePassword from "./Login/ChangePassword";
 import AdminProfileCard from "./Profile/ProfileAdmin";
 import ViewClientModal from "./Client/ViewClientComp";
 import Slot from "./sideBar/SlotBooking";
-import Payment from "./sideBar/Payment";
+// import Payment from "./sideBar/Payment";
 
 
 import LawyerList from "./User/LawyerCategories";
@@ -48,7 +48,7 @@ const RouterComp = () => {
       <Route path="/profile/:userId" element={<AdminProfileCard />} />
       <Route path="/viewclient/:_id" element={<ViewClientModal />} />
       <Route path="/slot" element={<Slot />} />
-      <Route path="/pay" element={<Payment/>} />
+      {/* <Route path="/pay" element={<Payment/>} /> */}
       <Route path="/show" element={<LawyerList/>} />
       <Route path="/use" element={<Categories/>} />
       

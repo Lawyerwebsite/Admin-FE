@@ -9,12 +9,12 @@ const ClientPages = () => {
       <SideBarComp />
 
       {/* Main Content */}
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col">
         {/* Navbar */}
         <AdminNav />
 
         {/* Page Content */}
-        <div className="flex-grow overflow-y-auto bg-gray-300 p-4">
+        <div className="flex-grow overflow-y-auto bg-gray-300 ">
           <ClientComp />
         </div>
       </div>
