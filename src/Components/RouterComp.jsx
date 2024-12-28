@@ -13,14 +13,15 @@ import Login from "./Login/Login";
 import ProtectedRoute from "./Protect/ProtectedRoute";
 import PublicRoute from "./Protect/PublicRoute";
 import ChangePassword from "./Login/ChangePassword";
-import AdminProfileCard from "./Profile/ProfileAdmin";
+// import AdminProfileCard from "./Profile/ProfileAdmin";
 import ViewClientModal from "./Client/ViewClientComp";
 import Slot from "./sideBar/SlotBooking";
-import Payment from "./sideBar/Payment";
+// import Payment from "./sideBar/Payment";
 
 
 import LawyerList from "./User/LawyerCategories";
 import Categories from "./User/Law";
+import ProfilePage from "../Pages/ProfilePage";
 
 const RouterComp = () => {
   return (
@@ -36,12 +37,13 @@ const RouterComp = () => {
       <Route path="/documents" element={<DocumentsPage />} />
       <Route path="/billing" element={<BillingPage />} />
       <Route path="/change" element={<ChangePassword />} />
-      <Route path="/profile/:userId" element={<AdminProfileCard />} />
+      {/* <Route path="/profile/:userId" element={<AdminProfileCard />} /> */}
       <Route path="/viewclient/:_id" element={<ViewClientModal />} />
       <Route path="/slot" element={<Slot />} />
-      <Route path="/pay" element={<Payment/>} />
+      {/* <Route path="/pay" element={<Payment/>} /> */}
       <Route path="/show" element={<LawyerList/>} />
       <Route path="/use" element={<Categories/>} />
+      <Route path="/profile/:userId" element={<ProfilePage/>} />
       
       
     </Routes>

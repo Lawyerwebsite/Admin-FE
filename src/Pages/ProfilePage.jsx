@@ -1,8 +1,8 @@
-import ClientComp from "../Components/Client/ClientComp";
 import { AdminNav } from "../Components/header/Navbar";
+import AdminProfileCard from "../Components/Profile/ProfileAdmin";
 import SideBarComp from "../Components/sideBar/SideBarComp";
 
-const ClientPages = () => {
+const ProfilePage = () => {
   return (
     <div className="w-full flex flex-col md:flex-row h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
@@ -15,11 +15,11 @@ const ClientPages = () => {
 
         {/* Page Content */}
         <div className=" w-full flex-grow overflow-y-auto bg-gray-300 ">
-          <ClientComp />
+            <AdminProfileCard/>
         </div>
       </div>
     </div>
   );
 };
 
-export default ClientPages;
+export default ProfilePage;

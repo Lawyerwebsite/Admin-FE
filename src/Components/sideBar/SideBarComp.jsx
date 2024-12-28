@@ -10,7 +10,7 @@ import {
   FiBarChart2,
 } from "react-icons/fi";
 
-import Logo from "../assets/logo.jpg";
+import Logo from "../assets/Logo.png";
 
 const menuData = [
   { title: "Dashboard", icon: <FiHome />, route: "/home" },
