@@ -25,7 +25,7 @@ const Login = () => {
       const res = await axios.post("http://localhost:7000/admin/login", formData);
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("adminId",res.data.findEmail._id)
+      localStorage.setItem("adminId", res.data.findEmail._id)
       toast.success(res.data.message);
       navigate("/home");
       setFormData(initialState);
@@ -35,21 +35,24 @@ const Login = () => {
   };
 
   return (
+
     <div
       className="flex items-center justify-center w-full h-screen bg-cover bg-center"
       style={{
         backgroundImage: 'url("https://cdn.wallpapersafari.com/26/86/GUaKh4.jpg")',
       }}
     >
-      <div className="flex items-center justify-center w-full h-screen bg-black bg-opacity-70">
-        <div className="bg-white shadow-lg rounded-xl w-[550px] min-h-[400px] p-6 border border-gray-300 bg-opacity-80">
-          <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Admin Login</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <div className="flex items-center justify-center w-full h-screen bg-gradient-to-b from-black/70 via-black/50 to-transparent">
+        <div className="bg-white bg-opacity-90 backdrop-blur-lg shadow-xl rounded-xl w-[90%] max-w-[500px] p-8 border border-gray-200">
+          <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
+            Admin Login
+          </h2>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             {/* Email Field */}
             <div className="relative">
               <label
                 htmlFor="email"
-                className="block text-lg font-medium text-gray-700 mb-2"
+                className="block text-lg font-semibold text-gray-700 mb-2"
               >
                 Email
               </label>
@@ -59,7 +62,7 @@ const Login = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-blue-400 transition"
                 placeholder="Enter your email"
                 required
               />
@@ -69,7 +72,7 @@ const Login = () => {
             <div className="relative">
               <label
                 htmlFor="password"
-                className="block text-lg font-medium text-gray-700 mb-2"
+                className="block text-lg font-semibold text-gray-700 mb-2"
               >
                 Password
               </label>
@@ -79,7 +82,7 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-blue-400 transition"
                 placeholder="Enter your password"
                 required
               />
@@ -88,27 +91,29 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2 bg-blue-500 text-white text-lg rounded-md hover:bg-blue-700 transition focus:ring focus:ring-blue-300"
+              className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg font-semibold rounded-lg hover:opacity-90 focus:ring-4 focus:ring-blue-300 transition-all"
             >
               Login
             </button>
           </form>
 
           {/* Forget Password Link */}
-          <div className="text-center mt-4">
+          <div className="text-center mt-6">
             <p className="text-gray-600">
               Forgot your password?{" "}
               <button
                 onClick={() => navigate("/change")}
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 font-medium hover:underline"
               >
-                Reset it here
+                Click here
               </button>
             </p>
           </div>
         </div>
       </div>
     </div>
+
+
   );
 };
 

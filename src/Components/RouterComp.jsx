@@ -1,34 +1,26 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-
 import SideBarComp from "./sideBar/SideBarComp";
-
 import { AdminNav } from "./header/Navbar";
 import Homepages from "../Pages/HomePage";
 import AppointmentPage from "../Pages/AppointmentPage";
 import CaseManagementPage from "../Pages/CaseManagmentPage";
-
 import ClientPages from "../Pages/ClientPage";
 import DocumentsPage from "../Pages/DocumentsPage";
-import BillingPage from "../Pages/BillingPage"
+import BillingPage from "../Pages/BillingPage";
 import AddClientPages from "../Pages/AddClientPage";
 import Login from "./Login/Login";
-
-
 import ProtectedRoute from "./Protect/ProtectedRoute";
 import PublicRoute from "./Protect/PublicRoute";
-
-import ForgetPassword from "./Login/ForgetPassword";
 import ChangePassword from "./Login/ChangePassword";
 import AdminProfileCard from "./Profile/ProfileAdmin";
 import ViewClientModal from "./Client/ViewClientComp";
 import Slot from "./sideBar/SlotBooking";
-// import Payment from "./sideBar/Payment";
+import Payment from "./sideBar/Payment";
 
 
 import LawyerList from "./User/LawyerCategories";
 import Categories from "./User/Law";
-
 
 const RouterComp = () => {
   return (
@@ -43,12 +35,11 @@ const RouterComp = () => {
       <Route path="/clients/add" element={<AddClientPages />} />
       <Route path="/documents" element={<DocumentsPage />} />
       <Route path="/billing" element={<BillingPage />} />
-      <Route path="/forget" element={<ForgetPassword />} />
       <Route path="/change" element={<ChangePassword />} />
       <Route path="/profile/:userId" element={<AdminProfileCard />} />
       <Route path="/viewclient/:_id" element={<ViewClientModal />} />
       <Route path="/slot" element={<Slot />} />
-      {/* <Route path="/pay" element={<Payment/>} /> */}
+      <Route path="/pay" element={<Payment/>} />
       <Route path="/show" element={<LawyerList/>} />
       <Route path="/use" element={<Categories/>} />
       
