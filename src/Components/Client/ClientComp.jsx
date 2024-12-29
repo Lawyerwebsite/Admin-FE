@@ -56,7 +56,7 @@ const ClientComp = () => {
           <table className="table-auto w-full text-left border-collapse ">
             {/* Table Head */}
             <thead>
-              <tr className="bg-blue-500  text-white text-sm md:text-lg xl:text-xl row-span-3">
+              <tr className="bg-black  text-white text-sm md:text-lg xl:text-xl row-span-3">
                 <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">S.no</th>
                 <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Name</th>
                 <th className="px-2 py-2 md:px-4 md:py-3 border  row-span-3">Email</th>
@@ -72,7 +72,7 @@ const ClientComp = () => {
                 <tr>
                   <td
                     colSpan="6"
-                    className="px-2 py-3 md:px-4 md:py-4 text-center text-gray-600 text-sm md:text-lg xl:text-xl"
+                    className="px-2 py-3 md:px-4 md:py-4 text-center text-gray-900 text-sm md:text-lg xl:text-xl"
                   >
                     No clients found.
                   </td>
@@ -81,21 +81,21 @@ const ClientComp = () => {
                 filteredClients.map((client, index) => (
                   <tr
                     key={client._id}
-                    className="border-t hover:bg-gray-100 transition duration-400"
+                    className="border-t hover:bg-gray-300 transition duration-400"
                   >
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-900 border ">
                       {index + 1}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-900 border ">
                       {client.name}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-900 border ">
                       {client.email}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-900 border ">
                       {client.number}
                     </td>
-                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-700 border ">
+                    <td className="px-2 py-2 md:px-4 md:py-3 text-sm md:text-lg xl:text-xl text-gray-900 border ">
                       {client.address}
                     </td>
                     <td className="px-2 py-2 md:px-4 md:py-3 flex justify-center border ">

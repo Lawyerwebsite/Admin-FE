@@ -28,7 +28,7 @@ function AppointmentManagement() {
   const authToken = localStorage.getItem("token");
   const [appointments, setAppointments] = useState([]);
   console.log(appointments);
-  
+
   const [availableTimes] = useState([
     "08:00 AM",
     "10:00 AM",
@@ -109,91 +109,96 @@ function AppointmentManagement() {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 min-h-screen font-sans">
-      <h1 className="text-4xl font-bold  mb-8 text-black">
-        Appointment Management
-      </h1>
-      <button
-        onClick={() => setShowAddModal(true)}
-        className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-xl px-6 py-3 rounded mb-6 transition-all shadow-lg"
-      >
-        <FaPlus className="text-2xl" /> Add Appointment
-      </button>
+    <div className="container mx-auto p-6 min-h-screen font-sans bg-white">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-4xl font-bold text-black">Appointment Management</h1>
 
-      <div className="grid grid-cols-1 border-gray-400 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {appointments.map((appointment) => {
-          const timestamp = appointment.date;
-          const date = new Date(timestamp);
-          const formattedDate = date.toISOString().split('T')[0];
-
-          return (
-            <div
-              key={appointment._id}
-              className="p-6 rounded-lg shadow-md bg-white border border-gray-200 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out"
-            >
-              <div>
-                <h2 className="text-2xl font-semibold text-gray-800 mb-2 ">{appointment.name}</h2>
-                <p className="text-gray-600 text-sm mb-1">
-                  <span className="font-semibold">Email:</span> {appointment.email}
-                </p>
-                <p className="text-gray-600 text-sm mb-1">
-                  <span className="font-semibold">Number:</span> {appointment.number}
-                </p>
-              </div>
-              <div className="text-sm text-gray-600 mt-4">
-                <p>
-                  <span className="font-semibold">Date:</span> {formattedDate}
-                </p>
-                <p>
-                  <span className="font-semibold">Time:</span> {appointment.time}
-                </p>
-                <p>
-                  <span className="font-semibold">Category:</span> {appointment.category}
-                </p>
-                <p>
-                  <span className="font-semibold">Address:</span> {appointment.address}
-                </p>
-              </div>
-              <div className="mt-4">
-                <span
-                  className={`inline-block text-xs font-bold px-3 py-1 rounded-full ${appointment.status === "confirmed"
-                      ? "bg-green-100 text-green-600"
-                      : "bg-yellow-100 text-yellow-600"
-                    }`}
-                >
-                  Status: {appointment.status}
-                </span>
-              </div>
-              <div className="mt-6 flex gap-3">
-                {appointment.status === "pending" && (
-                  <button
-                    onClick={() => handleConfirm(appointment._id)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
-                  >
-                    Confirm
-                  </button>
-                )}
-                <button
-                  onClick={() =>
-                    setRescheduleData({
-                      _id: appointment._id,
-                      current: appointment,
-                    })
-                  }
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
-                >
-                  Reschedule
-                </button>
-              </div>
-            </div>
-          );
-
-        })}
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-xl px-4 py-3 rounded transition-all shadow-lg"
+        >
+          <FaPlus className="text-xl" /> Add Appointment
+        </button>
       </div>
 
 
+      <div className="overflow-x-auto bg-white">
+        <table className="w-full table-auto border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-black text-white">
+              <th className="px-4 py-2 border border-gray-300 text-left">S.No</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Name</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Email</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Phone</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Date</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Time</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Category</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Address</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Status</th>
+              <th className="px-4 py-2 border border-gray-300 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {appointments.map((appointment, index) => {
+              const timestamp = appointment.date;
+              const date = new Date(timestamp);
+              const formattedDate = date.toISOString().split("T")[0];
+
+              return (
+                <tr
+                  key={appointment._id}
+                  className="hover:bg-gray-100 transition-all duration-300"
+                >
+                  <td className="px-4 py-2 border border-gray-300">{index + 1}</td>
+                  <td className="px-4 py-2 border border-gray-300">{appointment.name}</td>
+                  <td className="px-4 py-2 border border-gray-300">{appointment.email}</td>
+                  <td className="px-4 py-2 border border-gray-300">{appointment.number}</td>
+                  <td className="px-4 py-2 border border-gray-300">{formattedDate}</td>
+                  <td className="px-4 py-2 border border-gray-300">{appointment.time}</td>
+                  <td className="px-4 py-2 border border-gray-300">{appointment.category}</td>
+                  <td className="px-4 py-2 border border-gray-300">{appointment.address}</td>
+                  <td className="px-4 py-2 border border-gray-300">
+                    <span
+                      className={`inline-block text-xs font-bold px-3 py-1 rounded-full ${appointment.status === "confirmed"
+                          ? "bg-green-100 text-green-600"
+                          : "bg-yellow-100 text-yellow-600"
+                        }`}
+                    >
+                      {appointment.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300 text-center">
+                    <div className="flex justify-center gap-3">
+                      {appointment.status === "pending" && (
+                        <button
+                          onClick={() => handleConfirm(appointment._id)}
+                          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
+                        >
+                          Confirm
+                        </button>
+                      )}
+                      <button
+                        onClick={() =>
+                          setRescheduleData({
+                            _id: appointment._id,
+                            current: appointment,
+                          })
+                        }
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
+                      >
+                        Reschedule
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
       {showAddModal && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center mt-36">
           <div className="bg-white rounded-lg p-6 shadow-lg w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Add New Appointment</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -284,7 +289,6 @@ function AppointmentManagement() {
                 required
               ></textarea>
 
-              {/* Added Law Category Dropdown */}
               <label className="block text-gray-700 font-medium">Law Category</label>
               <select
                 value={newAppointment.category}
@@ -323,10 +327,6 @@ function AppointmentManagement() {
                 >
                   Add Appointment
                 </button>
-
-              </div>
-              <div>
-
               </div>
             </form>
           </div>
@@ -376,7 +376,6 @@ function AppointmentManagement() {
                 ))}
               </select>
 
-              {/* Optionally allow category to be rescheduled */}
               <input
                 type="text"
                 value={rescheduleData.current.category}
@@ -405,13 +404,13 @@ function AppointmentManagement() {
                 >
                   Reschedule
                 </button>
-
               </div>
             </form>
           </div>
         </div>
       )}
     </div>
+
   );
 }
 

@@ -7,7 +7,8 @@ import {
   FiCalendar,
   FiFileText,
   FiDollarSign,
-  FiBarChart2,
+  FiUser,
+  FiLogOut
 } from "react-icons/fi";
 
 import Logo from "../assets/Logo.png";
@@ -19,20 +20,22 @@ const menuData = [
   { title: "Appointments", icon: <FiCalendar />, route: "/appointments" },
   { title: "Documents", icon: <FiFileText />, route: "/documents" },
   { title: "Billing", icon: <FiDollarSign />, route: "/billing" },
+  { title: "Profile", icon: <FiUser />, route: "/profile" },
+  { title: "Logout", icon: <FiLogOut />, route: "/logout" },
 ];
 
 const SideBarComp = ({ isSidebarOpen, onToggleSidebar }) => {
   return (
     <>
       <div
-        className={`fixed inset-y-0 left-0 bg-white
-           shadow-lg border-r border-gray-200 
+        className={`fixed inset-y-0 left-0 bg-white text-black
+           shadow-lg 
         w-64 z-20 transform transition-transform duration-300 ease-in-out
         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
         md:translate-x-0 md:static md:w-64`}
       >
         <nav className="h-full flex flex-col mt-5">
-          <div className="bg-white flex items-center justify-center">
+          <div className="bg-white flex items-center justify-center p-4">
             <img src={Logo} alt="Law Link Logo" className="h-20 w-28" />
           </div>
 
@@ -44,8 +47,8 @@ const SideBarComp = ({ isSidebarOpen, onToggleSidebar }) => {
                   className={({ isActive }) =>
                     `flex items-center px-4 py-3 rounded-lg transition ${
                       isActive
-                        ? "bg-blue-500 text-white font-bold shadow-md"
-                        : "hover:bg-blue-100 hover:text-blue-500 text-gray-700"
+                        ? "bg-black text-white font-bold shadow-md"
+                        : "hover:bg-gray-200 hover:text-black text-black"
                     }`
                   }
                 >

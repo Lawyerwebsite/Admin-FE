@@ -50,13 +50,13 @@ const CaseManagementComp = () => {
   const [sortedCases, setSortedCases] = useState(cases);
   const [viewCase, setViewCase] = useState(null);
 
- 
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
   };
 
- 
+
   useEffect(() => {
     let filteredCases = cases;
 
@@ -75,7 +75,7 @@ const CaseManagementComp = () => {
     setSortedCases(filteredCases);
   }, [filters, cases]);
 
-  
+
   const addNewCase = () => {
     if (!newCase.title || !newCase.client) {
       alert("Please fill in all required fields.");
@@ -93,7 +93,7 @@ const CaseManagementComp = () => {
     };
 
     setCases([...cases, newCaseObject]);
-    setShowAddCaseForm(false); 
+    setShowAddCaseForm(false);
     setNewCase({
       id: "",
       title: "",
@@ -104,8 +104,8 @@ const CaseManagementComp = () => {
   };
   const exportCasesToPDF = () => {
     const doc = new jsPDF();
-  
-    
+
+
     doc.setFontSize(16);
     doc.text("Case Management Report", 14, 10);
     doc.setFontSize(12);
@@ -116,7 +116,7 @@ const CaseManagementComp = () => {
     doc.text("Start Date", 230, yPosition);
     doc.text("Client", 60, yPosition);
     doc.text("Status", 180, yPosition);
-    
+
     yPosition += 10;
 
     // Adding case data
@@ -130,7 +130,7 @@ const CaseManagementComp = () => {
     });
     doc.save("cases_report.pdf");
   };
-  
+
 
   // Show Edit Case form
   const handleEditCase = (caseItem) => {
@@ -140,8 +140,8 @@ const CaseManagementComp = () => {
 
 
   // const handleViewCase = (caseItem) => {
-    // setViewCase(caseItem);
-   
+  // setViewCase(caseItem);
+
 
   // };
 
@@ -178,8 +178,8 @@ const CaseManagementComp = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 min-h-screen bg-white">
-      <h2 className="text-2xl font-bold mb-6 text-center lg:text-left">
+    <div className="container mx-auto px-4 min-h-screen bg-white text-black">
+      <h2 className="text-3xl font-bold mb-6 text-center text-black border-b border-gray-300 pb-2">
         Case Management
       </h2>
 
@@ -188,7 +188,7 @@ const CaseManagementComp = () => {
         <select
           name="status"
           onChange={handleFilterChange}
-          className="p-2 border border-black rounded shadow-sm w-full sm:w-auto"
+          className="p-2 border border-gray-500 rounded shadow-sm w-full sm:w-auto bg-gray-100 text-black"
         >
           <option value="">Filter by Status</option>
           <option value="Ongoing">Ongoing</option>
@@ -199,23 +199,23 @@ const CaseManagementComp = () => {
           type="text"
           placeholder="Filter by Client"
           onChange={handleFilterChange}
-          className="p-2 border border-black rounded shadow-sm w-full sm:w-auto"
+          className="p-2 border border-gray-500 rounded shadow-sm w-full sm:w-auto bg-gray-100 text-black"
         />
         <input
           name="startDate"
           type="date"
           onChange={handleFilterChange}
-          className="p-2 border border-black rounded shadow-sm w-full sm:w-auto"
+          className="p-2 border border-gray-500 rounded shadow-sm w-full sm:w-auto bg-gray-100 text-black"
         />
         <button
           onClick={exportCasesToPDF}
-          className="bg-gray-500 text-white px-4 py-2 rounded shadow-sm w-full sm:w-auto"
+          className="bg-black text-white px-4 py-2 rounded shadow-sm w-full sm:w-auto hover:bg-gray-800"
         >
           Export Cases (PDF)
         </button>
         <button
           onClick={() => setShowAddCaseForm(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded shadow-sm w-full sm:w-auto"
+          className="bg-black text-white px-4 py-2 rounded shadow-sm w-full sm:w-auto hover:bg-gray-800"
         >
           + Add New Case
         </button>
@@ -315,18 +315,18 @@ const CaseManagementComp = () => {
 
       {/* Case Table */}
       <div className="overflow-x-auto">
-        <table className="w-full table-auto">
-          <thead className="bg-blue-600 text-white">
+        <table className="w-full table-auto border border-gray-300">
+          <thead className="bg-black text-white">
             <tr>
-              <th className="border border-gray-300 text-lg p-4">ID</th>
-              <th className="border border-gray-300 text-lg p-4">Client</th>
-              <th className="border border-gray-300 text-lg p-4">Email</th>
-              <th className="border border-gray-300 text-lg p-4">Number</th>
-              <th className="border border-gray-300 text-lg p-4">Title</th>
-              <th className="border border-gray-300 text-lg p-4">Status</th>
-              <th className="border border-gray-300 text-lg p-4">Start Date</th>
-              <th className="border border-gray-300 text-lg p-4">End Date</th>
-              <th className="border border-gray-300 text-lg p-4">Actions</th>
+              <th className="border border-gray-500 text-lg p-4">ID</th>
+              <th className="border border-gray-500 text-lg p-4">Client</th>
+              <th className="border border-gray-500 text-lg p-4">Email</th>
+              <th className="border border-gray-500 text-lg p-4">Number</th>
+              <th className="border border-gray-500 text-lg p-4">Title</th>
+              <th className="border border-gray-500 text-lg p-4">Status</th>
+              <th className="border border-gray-500 text-lg p-4">Start Date</th>
+              <th className="border border-gray-500 text-lg p-4">End Date</th>
+              <th className="border border-gray-500 text-lg p-4">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -335,55 +335,31 @@ const CaseManagementComp = () => {
               const date = new Date(timestamp);
               const startDate = date.toISOString().split("T")[0];
               return (
-                <tr key={caseItem.id}>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {index + 1}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {caseItem.name}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {caseItem.email}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {caseItem.number}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {caseItem.title}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {caseItem.status}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {startDate}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2">
-                    {caseItem.endDate}
-                  </td>
-                  <td className="border border-gray-300 text-lg p-2 flex gap-4">
+                <tr key={caseItem.id} className="hover:bg-gray-200">
+                  <td className="border border-gray-300 text-lg p-2">{index + 1}</td>
+                  <td className="border border-gray-300 text-lg p-2">{caseItem.name}</td>
+                  <td className="border border-gray-300 text-lg p-2">{caseItem.email}</td>
+                  <td className="border border-gray-300 text-lg p-2">{caseItem.number}</td>
+                  <td className="border border-gray-300 text-lg p-2">{caseItem.title}</td>
+                  <td className="border border-gray-300 text-lg p-2">{caseItem.status}</td>
+                  <td className="border border-gray-300 text-lg p-2">{startDate}</td>
+                  <td className="border border-gray-300 text-lg p-2">{caseItem.endDate}</td>
+                  <td className="border border-gray-300 text-lg p-2 flex items-center justify-center gap-4">
                     <button
                       onClick={() => handleEditCase(caseItem)}
-                      className="text-blue-500"
+                      className="text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 py-2 px-5 flex items-center justify-center rounded-md shadow-md transition duration-200"
                     >
                       Edit
                     </button>
-                    {/* <button
-                      onClick={() => handleViewCase(caseItem)}
-                      className="text-green-500"
-                    >
-                      View
-                    </button> */}
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-       
-        
       </div>
-      
     </div>
+
   );
 };
 

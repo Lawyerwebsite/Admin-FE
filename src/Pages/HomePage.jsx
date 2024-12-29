@@ -19,10 +19,7 @@ const Homepages = () => {
         onToggleSidebar={handleSidebarToggle}
       />
 
-      <div className="flex flex-col w-full h-screen ">
-        <AdminNav onSidebarToggle={handleSidebarToggle} />
-
-        <div className="flex-1 overflow-y-auto p-4 bg-gray-300">
+        <div className="flex-1 overflow-y-auto p-4 bg-white">
           <DashCards />
 
           <div className="w-full grid grid-cols-2 max-xl:grid-cols-1 gap-5 mt-5">
@@ -31,7 +28,7 @@ const Homepages = () => {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 };
 
