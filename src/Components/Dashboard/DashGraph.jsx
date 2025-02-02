@@ -51,7 +51,7 @@ const HomeLawyerRevenueChart = () => {
   const chartData = allData[timeInterval];
 
   return (
-    <div className=" w-full h-[450px] ml-6 bg-white max-sm:h-[350px] p-10 max-sm:pb-16 pb-16 max-sm:p-2 shadow-sm shadow-gray-400 border-t rounded-lg">
+    <div className=" w-full h-[450px] ml-6 bg-white max-sm:h-[350px] p-10 max-sm:pb-16 pb-16 max-sm:p-2 shadow-sm shadow-gray-400 border-2  border-gray-300 rounded-lg">
       {/* Chart Title and Dropdown */}
       <div className="flex justify-between items-center mb-4 ">
         <h2 className="text-lg font-bold text-gray-800">

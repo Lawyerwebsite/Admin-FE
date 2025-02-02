@@ -13,13 +13,13 @@ const AddClientPages = () => {
     <>
       <div className="flex ">
         <SideBarComp/>
-        <div className="w-full">
-          <AdminNav/>
+        {/* <div className="w-full">
+          <AdminNav/> */}
           <div>
            <FormData/>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

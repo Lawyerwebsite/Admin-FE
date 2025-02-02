@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import './index.css';
 import RouterComp from './Components/RouterComp';
 import { ToastContainer, toast } from 'react-toastify';

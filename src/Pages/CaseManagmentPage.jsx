@@ -10,7 +10,7 @@ const CaseManagementPage = () => {
 
 
 
-        <div className="flex-1 overflow-y-auto bg-gray-200 p-4">
+        <div className="flex-1 overflow-y-auto bg-gray-300 p-6 mt-4">
           <CaseManagementComp />
         </div>
       </div>

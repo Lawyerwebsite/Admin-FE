@@ -46,7 +46,7 @@ export default class ClientStatusChart extends PureComponent {
     return (
       <div className="">
         {/* Responsive Pie Chart Section */}
-        <div className="mr-7 h-[450px] ml-7 p-6 rounded-lg shadow-sm bg-white shadow-gray-400 border-t">
+        <div className="mr-7 h-[450px] ml-7 p-6 rounded-lg shadow-sm bg-white shadow-gray-400 border-2 boder-gray">
           <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-700  ">
             Client Status Overview
           </h2>

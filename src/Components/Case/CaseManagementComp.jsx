@@ -11,7 +11,7 @@ const getAllAppointments = async (setAppointments) => {
   console.log(authToken);
 
   try {
-    const res = await axios.get("http://localhost:7000/appointment/get", {
+    const res = await axios.get("http://localhost:7000/appointment/gets", {
       headers: { Authorization: `Bearer ${authToken}` },
     });
     toast.success(res.data.Message);
@@ -22,7 +22,7 @@ const getAllAppointments = async (setAppointments) => {
     );
     setAppointments(allAppointments);
   } catch (err) {
-    console.error(err);
+    // console.error(err);s
     toast.error(err.response?.data?.Message || "Failed to fetch appointments");
   }
 };
@@ -32,7 +32,7 @@ const CaseManagementComp = () => {
 
   const [filters, setFilters] = useState({
     status: "",
-    client: "",
+    name: "",
     startDate: "",
   });
 
@@ -54,18 +54,26 @@ const CaseManagementComp = () => {
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
-  };
+  }; 
 
 
   useEffect(() => {
-    let filteredCases = cases;
+    let filteredCases =   [...cases];
+    console.log(filteredCases);
+    
 
     if (filters.status) {
       filteredCases = filteredCases.filter((c) => c.status === filters.status);
     }
-    if (filters.client) {
-      filteredCases = filteredCases.filter((c) => c.client.toLowerCase().includes(filters.client.toLowerCase()));
+    if (filters.name) {
+      filteredCases = filteredCases.filter((c) =>
+        c.name?.toString().toLowerCase().includes(filters.name.toLowerCase())
+      
+      );
+      
     }
+    
+      
     if (filters.startDate) {
       filteredCases = filteredCases.filter(
         (c) => c.startDate === filters.startDate
@@ -89,7 +97,7 @@ const CaseManagementComp = () => {
       lawyer: newCase.lawyer,
       status: newCase.status,
       startDate: newCase.startDate,
-      emdDate: newCase.endDateDate,
+      endDate: newCase.endDateDate,
     };
 
     setCases([...cases, newCaseObject]);
@@ -195,7 +203,7 @@ const CaseManagementComp = () => {
           <option value="Resolved">Resolved</option>
         </select>
         <input
-          name="client"
+          name="name"
           type="text"
           placeholder="Filter by Client"
           onChange={handleFilterChange}
@@ -287,10 +295,10 @@ const CaseManagementComp = () => {
             </select>
             <input
               type="date"
-              value={editCase ? editCase.startDate : newCase.startDate}
+              value={editCase ? editCase.endDate : newCase.startDate}
               onChange={(e) =>
                 editCase
-                  ? setEditCase({ ...editCase, startDate: e.target.value })
+                  ? setEditCase({ ...editCase, endDate: e.target.value })
                   : setNewCase({ ...newCase, startDate: e.target.value })
               }
               className="p-2 border border-black rounded shadow-sm w-full"

@@ -4,21 +4,21 @@ import SideBarComp from "../Components/sideBar/SideBarComp";
 
 const ClientPages = () => {
   return (
-    <div className="w-full flex flex-col md:flex-row h-screen overflow-hidden bg-gray-100">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <SideBarComp />
 
       {/* Main Content */}
-      <div className=" w-full flex flex-col">
+      {/* <div className=" w-full flex flex-col"> */}
         {/* Navbar */}
-        <AdminNav />
+        {/* <AdminNav /> */}
 
         {/* Page Content */}
-        <div className=" w-full flex-grow overflow-y-auto bg-gray-300 ">
+        <div className=" flex-1 overflow-y-auto bg-gray-300 p-10 ">
           <ClientComp />
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

@@ -5,19 +5,19 @@ import SideBarComp from "../Components/sideBar/SideBarComp";
 const ProfilePage = () => {
   return (
     <div className="w-full flex flex-col md:flex-row h-screen overflow-hidden bg-gray-100">
-      {/* Sidebar */}
+      
       <SideBarComp />
 
-      {/* Main Content */}
-      <div className=" w-full flex flex-col">
-        {/* Navbar */}
-        <AdminNav />
+      
+      {/* <div className=" w-full flex flex-col">
+        
+        <AdminNav /> */}
 
-        {/* Page Content */}
-        <div className=" w-full flex-grow overflow-y-auto bg-gray-300 ">
+        
+        <div className=" w-full flex-grow overflow-y-auto bg-gray-300 p-6">
             <AdminProfileCard/>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

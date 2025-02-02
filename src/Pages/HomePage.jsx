@@ -13,7 +13,7 @@ const Homepages = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden ">
       <SideBarComp
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={handleSidebarToggle}

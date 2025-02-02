@@ -39,7 +39,7 @@ const Login = () => {
     <div
       className="flex items-center justify-center w-full h-screen bg-cover bg-center"
       style={{
-        backgroundImage: 'url("https://cdn.wallpapersafari.com/26/86/GUaKh4.jpg")',
+        backgroundImage: 'url("https://static.vecteezy.com/system/resources/previews/026/774/206/non_2x/handbook-and-judge-s-gavel-on-the-wooden-table-free-photo.jpeg")',
       }}
     >
       <div className="flex items-center justify-center w-full h-screen bg-gradient-to-b from-black/70 via-black/50 to-transparent">

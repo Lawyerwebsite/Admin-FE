@@ -8,14 +8,14 @@ const AppointmentPage = () => {
       <div className="flex h-screen overflow-hidden">
         <SideBarComp />
 
-        <div className="flex flex-col w-full h-screen">
-          <AdminNav />
+        {/* <div className="flex flex-col w-full h-screen">
+          <AdminNav /> */}
 
-          <div className="flex-1 overflow-y-auto bg-gray-300 p-4">
+          <div className="flex-1 overflow-y-auto bg-gray-300 p-8">
             <AppointmentManagement />
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

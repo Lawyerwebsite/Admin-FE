@@ -19,7 +19,7 @@ const DocumentsAdmin = () => {
   };
 
   return (
-    <div className="p-6 h-[60%] max-w-4xl mx-auto bg-white border border-gray-300 rounded-lg shadow-lg mt-8">
+    <div className=" w-full p-6 h-[90%]   bg-white border border-gray-300 rounded-lg shadow-lg mt-8">
       <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
         Admin Documents
       </h1>

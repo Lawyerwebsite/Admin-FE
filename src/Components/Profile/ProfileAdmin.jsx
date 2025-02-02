@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const initialState = [
-  {
-    name: "",
-    email: "",
-    phone: "",
-    dob: "",
-    gender: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    category: "",
-    qualification: "",
-    experience: "",
-    bio: "",
-    image: null,
-  },
-];
+const initialState = {
+  name: "",
+  email: "",
+  phone: "",
+  dob: "",
+  gender: "",
+  address: "",
+  city: "",
+  state: "",
+  zipCode: "",
+  category: "",
+  qualification: "",
+  experience: "",
+  bio: "",
+  enrollmentnumber: "", // Add this field
+  registernumber: "",   // Add this field
+  image: null,
+};
 
 const AdminProfileCard = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,6 +29,9 @@ const AdminProfileCard = () => {
 
   const adminId = localStorage.getItem("adminId");
   const token = localStorage.getItem("token");
+
+  
+  
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -44,6 +47,8 @@ const AdminProfileCard = () => {
         console.error("Error fetching profile data", error);
       }
     };
+    console.log();
+    
 
     fetchProfileData();
   }, [adminId]);
@@ -101,11 +106,9 @@ const AdminProfileCard = () => {
     <div className="max-w-7xl mx-auto p-6 bg-gray-50 min-h-screen">
       <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col min-h-full">
         {isEditing ? (
-          
           <div className="flex-grow">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">Edit Profile</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              
               <div>
                 <label className="block text-sm font-semibold text-black">Name</label>
                 <input
@@ -231,6 +234,30 @@ const AdminProfileCard = () => {
               </div>
 
               <div>
+                <label className="block text-sm font-semibold text-black">Enrollment Number</label>
+                <input
+                  type="text"
+                  name="enrollmentnumber"
+                  value={getFormData.enrollmentno}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="MS/850000000000000/2000"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-black">Register Number</label>
+                <input
+                  type="text"
+                  name="registernumber"
+                  value={getFormData.registerno}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-md p-3 mt-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="NB/TN/2025/0000000000"
+                />
+              </div>
+
+              <div>
                 <label className="block text-sm font-semibold text-black">Photo</label>
                 <input
                   type="file"
@@ -253,7 +280,6 @@ const AdminProfileCard = () => {
             </div>
           </div>
         ) : (
-          
           <div className="flex-grow">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">Profile Information</h3>
             <div className="flex flex-col gap-12 my-8 justify-between items-center">
@@ -330,16 +356,25 @@ const AdminProfileCard = () => {
                 <label className="text-lg font-semibold text-black">Experience</label>
                 <p className="text-lg text-gray-800">{getFormData.experience}</p>
               </div>
+
+              <div>
+                <label className="text-lg font-semibold text-black">Enrollment Number</label>
+                <p className="text-lg text-gray-800">{getFormData.enrollmentnumber}</p>
+              </div>
+
+              <div>
+                <label className="text-lg font-semibold text-black">Register Number</label>
+                <p className="text-lg text-gray-800">{getFormData.registernumber}</p>
+              </div>
             </div>
           </div>
         )}
 
-       
         <button
-          onClick={handleEditProfile}
+          onClick={isEditing ? handleSaveProfile : handleEditProfile}
           className="mt-6 py-3 px-8 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition duration-300"
         >
-          Edit Profile
+          {isEditing ? "Save Profile" : "Edit Profile"}
         </button>
       </div>
     </div>

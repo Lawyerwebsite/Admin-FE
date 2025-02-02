@@ -32,6 +32,7 @@ const ViewClientModal = () => {
   const [client, setClient] = useState([]);
   const [files, setFiles] = useState([]);
   const { _id } = useParams();
+  console.log(client);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -150,8 +151,21 @@ const ViewClientModal = () => {
           </button>
         </form>
         <ul className="list-disc pl-8">
-          {client.fileOriginalName ? (
-            <li className="text-xl">{client.fileOriginalName}</li>
+          {client.fileOriginalName && client.filePath ? (
+            <li className="text-xl">
+              {client.fileOriginalName}{" "}
+              <button
+                onClick={() => {
+                  const fileUrl = client.filePath.startsWith("http")
+                    ? client.filePath
+                    : `http://localhost:7000/upload/${client.fileName}`;
+                  window.open(fileUrl, "_blank");
+                }}
+                className="ml-4 px-4 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                View
+              </button>
+            </li>
           ) : (
             <li className="text-xl">No documents uploaded.</li>
           )}
