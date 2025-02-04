@@ -103,7 +103,7 @@ const AdminProfileCard = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gray-50 min-h-screen">
+    <div className="max-w-7xl mx-auto p-6 bg-gray-300 min-h-screen">
       <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col min-h-full">
         {isEditing ? (
           <div className="flex-grow">

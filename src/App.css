@@ -1,0 +1,13 @@
+/* Add this to your global CSS file */
+.table-container {
+    overflow-x: auto;
+  }
+  
+  .table-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+  }
+  
+  .table-container {
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+  }

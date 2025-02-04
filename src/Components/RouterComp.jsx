@@ -22,6 +22,7 @@ import Slot from "./sideBar/SlotBooking";
 import LawyerList from "./User/LawyerCategories";
 import Categories from "./User/Law";
 import ProfilePage from "../Pages/ProfilePage";
+import TestimonialSlider from "./sideBar/Review";
 
 const RouterComp = () => {
   return (
@@ -44,6 +45,7 @@ const RouterComp = () => {
       <Route path="/show" element={<LawyerList/>} />
       <Route path="/use" element={<Categories/>} />
       <Route path="/profile/:userId" element={<ProfilePage/>} />
+      <Route path="/review" element={<TestimonialSlider/>} />
       
       
     </Routes>
